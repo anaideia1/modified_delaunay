@@ -1,4 +1,4 @@
-Modified Delaunay algorithm
+Modified Delaunay triangulation algorithm
 
 First step:
 Splits all points on a plane with Graham Scan to recursive convex hulls (one in another).
