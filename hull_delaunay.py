@@ -233,12 +233,14 @@ class HullDelaunay(HullDelaunayInterface):
         """
         tri1, tri2 = initial_triangles[index], initial_triangles[index + 1]
         points = [*tri1, *tri2]
-        common = [
-            elem for elem, count in Counter(points).items() if count > 1
-        ]
-        not_common = [
-            item for item in points if item not in common
-        ]
+        common = sorted(
+            [elem for elem, count in Counter(points).items() if count > 1],
+            key=lambda point: point.y, reverse=True
+        )
+        not_common = sorted(
+            [item for item in points if item not in common],
+            key= lambda point: point.x
+        )
         if len(common) == 2:
             ord_quad = reduce(operator.add, zip(not_common, common))
             if (
