@@ -255,9 +255,12 @@ class HullDelaunay(HullDelaunayInterface):
                 )
                 initial_triangles[index] = ordered_new_triangles[0]
                 initial_triangles[index + 1] = ordered_new_triangles[1]
-                self._single_delaunay_transformation_with_backsteps(
-                    initial_triangles, index - 1
-                )
+                try:
+                    self._single_delaunay_transformation_with_backsteps(
+                        initial_triangles, index - 1
+                    )
+                except IndexError:
+                    pass
 
 
     def _delaunay_transformation(
@@ -321,6 +324,8 @@ class InternalHullDelaunay(HullDelaunay):
                 else:
                     switch_point = i
             if start_point is not None and switch_point is not None:
+                start_point = start_point % len(self.outer_hull)
+                switch_point = switch_point % len(self.outer_hull)
                 if start_point > switch_point:
                     start_point -= len(self.outer_hull)
                 break

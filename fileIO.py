@@ -44,7 +44,7 @@ class FileGenerator:
         self.number_of_points = num
         self.coordinates_range = coord_range
 
-    def _generate_points(self) -> set[Point]:
+    def generate_points(self) -> set[Point]:
         datapoints = np.random.randint(
             1, self.coordinates_range,
             size=(self.number_of_points, 2)
@@ -52,7 +52,7 @@ class FileGenerator:
         return {Point(*point) for point in datapoints}
 
     def write_points(self, points: list[Point] = None) -> None:
-        points = self._generate_points() if points is None else points
+        points = self.generate_points() if points is None else points
 
         with open(self.file_name, "w") as f:
             for point in points:
